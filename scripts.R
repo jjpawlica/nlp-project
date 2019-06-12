@@ -6,6 +6,7 @@ setwd(here())
 
 inputDir <- ".\\data"
 outputDir <- ".\\results"
+utilsDir <- ".\\utils"
 
 # Instalacja i aktywacja wymaganych pakietów
 install.packages(c("tm", "hunspell"))
@@ -20,23 +21,24 @@ vcorpus <- VCorpus(
   readerControl = list(language = "pl_PL")
 )
 
-
-# Wstępne przetwarzanie
+# Wstępne przetwarzanie: numery, znaki interpunkcyjne, do małej litery, 
 
 vcorpus <- tm_map(vcorpus, removeNumbers)
 vcorpus <- tm_map(vcorpus, removePunctuation)
 vcorpus <- tm_map(vcorpus, content_transformer(tolower))
 
+
+# Wstępne przetwarzanie: słowa ze stop listy
+
+stoplistFile <- paste(utilsDir, "\\", "stopwords_pl.txt", sep = "", collapse = NULL)
+stoplist <- readLines(stoplistFile, encoding = "UTF-8")
+vcorpus <- tm_map(vcorpus, removeWords, stoplist)
+
+# Wstępne przetwarzanie: nadmierne puste znaki
+
+vcorpus <- tm_map(vcorpus, stripWhitespace)
+
 # Wyświetlanie informacji o korpusie
-vcorpus
+
 summary(vcorpus)
-View(vcorpus)
 inspect(vcorpus)
-
-vcorpus[1]
-summary(vcorpus[1])
-inspect(vcorpus[1])
-
-vcorpus[[1]]
-summary(vcorpus[[1]])
-inspect(vcorpus[[1]])
