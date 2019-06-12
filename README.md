@@ -7,7 +7,7 @@ motoryzacja:
 https://www.motofakty.pl/artykul/audi-auto-powie-jak-jechac-by-zdazyc-na-zielone-swiatlo.html
 https://www.motofakty.pl/artykul/nissan-ten-system-ma-zrewolucjonizowac-prowadzenie-samochodu.html
 https://www.motofakty.pl/artykul/volvo-auta-beda-sie-informowac-o-niebezpiecznych-sytuacjach-drogowych.html
-https://www.motofakty.pl/artykul/auto-bez-kierowcy-autonomiczny-lexus-trafi-do-sprzedazy.html
+https://www.motofakty.pl/artykul/opel-combo-jakie-systemy-wspomagaja-kierowce.html
 
 przeglądarki:
 
