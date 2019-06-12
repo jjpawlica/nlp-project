@@ -202,18 +202,31 @@ dev.off()
 # Dekompozycja wedłud wartości osobliwych (analiza ukrytych wymiarów semantycznych) d 4 b
 
 tdm_tfidf_1_20_matrix <- as.matrix(tdm_tfidf_1_20)
+tdm_tfidf_2_19_matrix <- as.matrix(tdm_tfidf_2_19)
+tdm_tfidf_3_18_matrix <- as.matrix(tdm_tfidf_3_18)
+tdm_tfidf_4_17_matrix <- as.matrix(tdm_tfidf_4_17)
 
-lsaModel <- lsa(tdm_tfidf_1_20_matrix)
-lsaModel$tk # odpowiednik macierzy U, współrzędne wyrazów 
-lsaModel$dk # odpowiednik macierzy V, współrzędne dokumentów
-lsaModel$sk # odpowiednik macierzy D, znaczenie składowych
+lsa_model_1_20 <- lsa(tdm_tfidf_1_20_matrix)
+lsa_model_2_19 <- lsa(tdm_tfidf_2_19_matrix)
+lsa_model_3_18 <- lsa(tdm_tfidf_3_18_matrix)
+lsa_model_4_17 <- lsa(tdm_tfidf_4_17_matrix)
 
-coordTerms <- lsaModel$tk %*% diag(lsaModel$sk)
-coordDocs <- lsaModel$dk %*% diag(lsaModel$sk)
+# lsa_model$tk # odpowiednik macierzy U, współrzędne wyrazów 
+# lsa_modeldk # odpowiednik macierzy V, współrzędne dokumentów
+# lsa_model$sk # odpowiednik macierzy D, znaczenie składowych
+
+coordTerms <- lsa_model_1_20$tk %*% diag(lsa_model_1_20$sk)
+coordDocs <- lsa_model_1_20$dk %*% diag(lsa_model_1_20$sk)
 words <- c("samochód", "auto", "kierowca", "technologia", "przeglądarka", "internet", "serce", 'hiv', "rak", "zdrowie", "dieta", "gen", "dna") 
 coordWords <- coordTerms[words,]
 
 legend <- paste(paste("d",1:20,sep = ""), rownames(coordDocs), sep = " - ")
+
+plot(coordDocs[,1],coordDocs[,2], pch=1, col="black", xlim=c(-0.2,0.05))
+points(coordWords[,1],coordWords[,2], pch=2, col="red")
+text(coordDocs[,1],coordDocs[,2],paste("d",1:19,sep=""),pos=4, col="black")
+text(coordWords[,1],coordWords[,2],rownames(coordWords),pos=4, col="red")
+legend("bottomleft", legend, cex=0.4, text.col="dark violet")
 
 
 
