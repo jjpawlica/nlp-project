@@ -110,15 +110,19 @@ tdm_bin_all <- TermDocumentMatrix(vcorpus, control = list(weigthing = weightBin)
 
 tdm_tf_1_20 <- TermDocumentMatrix(vcorpus, control = list(bounds = list(global = c(1, Inf))))
 tdm_tfidf_1_20 <- TermDocumentMatrix(vcorpus, control = list( weighting = weightTfIdf, bounds = list(global = c(1, Inf))))
+dtm_tfidf_1_20 <- DocumentTermMatrix(vcorpus, control=list(weighting = weightTfIdf, bounds = list(global = c(1,Inf))))
 
 tdm_tf_2_19 <- TermDocumentMatrix(vcorpus, control = list(bounds = list(global = c(2,19))))
 tdm_tfidf_2_19 <- TermDocumentMatrix(vcorpus, control = list( weighting = weightTfIdf, bounds = list(global = c(2,19))))
+dtm_tfidf_2_19 <- DocumentTermMatrix(vcorpus, control=list(weighting = weightTfIdf, bounds = list(global = c(2,19))))
 
 tdm_tf_3_18 <- TermDocumentMatrix(vcorpus, control = list(bounds = list(global = c(3,18))))
 tdm_tfidf_3_18 <- TermDocumentMatrix(vcorpus, control = list( weighting = weightTfIdf, bounds = list(global = c(3,18))))
+dtm_tfidf_3_18 <- DocumentTermMatrix(vcorpus, control=list(weighting = weightTfIdf, bounds = list(global = c(3,18))))
 
 tdm_tf_4_17 <- TermDocumentMatrix(vcorpus, control = list(bounds = list(global = c(4,17))))
 tdm_tfidf_4_17 <- TermDocumentMatrix(vcorpus, control = list( weighting = weightTfIdf, bounds = list(global = c(4,17))))
+dtm_tfidf_4_17 <- DocumentTermMatrix(vcorpus, control=list(weighting = weightTfIdf, bounds = list(global = c(4,17))))
 
 tdm_tf_all
 tdm_bin_all
@@ -133,3 +137,64 @@ tdm_tfidf_2_19
 tdm_tfidf_3_18
 tdm_tfidf_4_17
 
+
+# Analiza głównych składowych
+
+pca_1_20 <- prcomp(dtm_tfidf_1_20)
+pca_2_19 <- prcomp(dtm_tfidf_2_19)
+pca_3_18 <- prcomp(dtm_tfidf_3_18)
+pca_4_17 <- prcomp(dtm_tfidf_4_17)
+
+legend <- paste(paste("d", 1:20, sep = ""), rownames(dtm_tfidf_1_20), sep = " - ")
+
+## Wykres dla 1 - 20
+pca_plot_1_20 <- paste(outputDir,'\\',"pca_1_20.png",sep = "", collapse = NULL)
+
+png(filename = pca_plot_1_20, width = 1024)
+options(scipen = 5)
+par(mar = c(5.1, 4.1, 4.1, 25.1), xpd = TRUE)
+plot(pca_1_20$x[,1], pca_1_20$x[,2], pch = 1, col = "black", xlab = "", ylab = "")
+text(pca_1_20$x[,1], pca_1_20$x[,2], paste("d",1:19,sep = ""), col = "black",pos = 4)
+legend("topright",  inset = c(-0.57,0), legend, text.font = 16, cex = 0.5, text.col = "black")
+dev.off()
+
+## Wykres dla 2 - 19
+pca_plot_2_19 <- paste(outputDir,'\\',"pca_2_19.png",sep = "", collapse = NULL)
+
+png(filename = pca_plot_2_19, width = 1024)
+options(scipen = 5)
+par(mar = c(5.1, 4.1, 4.1, 25.1), xpd = TRUE)
+plot(pca_2_19$x[,1], pca_2_19$x[,2], pch = 1, col = "black", xlab = "", ylab = "")
+text(pca_2_19$x[,1], pca_2_19$x[,2], paste("d",1:19,sep = ""), col = "black",pos = 4)
+legend("topright",  inset = c(-0.57,0), legend, text.font = 16, cex = 0.5, text.col = "black")
+dev.off()
+
+## Wykres dla 3 - 18
+pca_plot_3_18 <- paste(outputDir,'\\',"pca_3_18.png",sep = "", collapse = NULL)
+
+png(filename = pca_plot_3_18, width = 1024)
+options(scipen = 5)
+par(mar = c(5.1, 4.1, 4.1, 25.1), xpd = TRUE)
+plot(pca_3_18$x[,1], pca_3_18$x[,2], pch = 1, col = "black", xlab = "", ylab = "")
+text(pca_3_18$x[,1], pca_3_18$x[,2], paste("d",1:19,sep = ""), col = "black",pos = 4)
+legend("topright",  inset = c(-0.57,0), legend, text.font = 16, cex = 0.5, text.col = "black")
+dev.off()
+
+## Wykres dla 4 - 17
+pca_plot_4_17 <- paste(outputDir,'\\',"pca_4_17.png",sep = "", collapse = NULL)
+
+png(filename = pca_plot_3_18, width = 1024)
+options(scipen = 5)
+par(mar = c(5.1, 4.1, 4.1, 25.1), xpd = TRUE)
+plot(pca_4_17$x[,1], pca_4_17$x[,2], pch = 1, col = "black", xlab = "", ylab = "")
+text(pca_4_17$x[,1], pca_3_18$x[,2], paste("d",1:19,sep = ""), col = "black",pos = 4)
+legend("topright",  inset = c(-0.57,0), legend, text.font = 16, cex = 0.5, text.col = "black")
+dev.off()
+
+# Dekompozycja wedłud wartości osobliwych (analiza ukrytych wymiarów semantycznych)
+
+install.packages("lsa")
+
+library(lsa)
+
+dtm_tfidf_1_20_matrix <- as.matrix(dtm_tfidf_1_20)
