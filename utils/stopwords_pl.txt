@@ -2,6 +2,8 @@
 # See http://project.carrot2.org/license.html
 # Also see http://www.opensource.org/licenses/bsd-license.html
 # From trunk/core/carrot2-util-text/src-resources/stopwords.pl
+a
+r.
 vol
 o.o.
 mgr
