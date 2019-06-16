@@ -109,8 +109,7 @@ writeCorpus(vcorpus, path = preprocessedDir)
 # Wyświetlanie informacji o korpusie  --- A
 
 summary(vcorpus)
-inspect(vcorpus[1])
-
+inspect(vcorpus)
 
 # Tworzenie macierzy częstości --- c 4 b
 
@@ -215,6 +214,8 @@ lsa_model_4_17 <- lsa(tdm_tfidf_4_17_matrix)
 # lsa_modeldk # odpowiednik macierzy V, współrzędne dokumentów
 # lsa_model$sk # odpowiednik macierzy D, znaczenie składowych
 
+# Wykres dla macierzy 1-20
+
 coordTerms <- lsa_model_1_20$tk %*% diag(lsa_model_1_20$sk)
 coordDocs <- lsa_model_1_20$dk %*% diag(lsa_model_1_20$sk)
 words <- c("samochód", "auto", "kierowca", "technologia", "przeglądarka", "internet", "serce", 'hiv', "rak", "zdrowie", "dieta", "gen", "dna") 
@@ -222,13 +223,72 @@ coordWords <- coordTerms[words,]
 
 legend <- paste(paste("d",1:20,sep = ""), rownames(coordDocs), sep = " - ")
 
-plot(coordDocs[,1],coordDocs[,2], pch=1, col="black", xlim=c(-0.2,0.05))
-points(coordWords[,1],coordWords[,2], pch=2, col="red")
-text(coordDocs[,1],coordDocs[,2],paste("d",1:19,sep=""),pos=4, col="black")
-text(coordWords[,1],coordWords[,2],rownames(coordWords),pos=4, col="red")
-legend("bottomleft", legend, cex=0.4, text.col="dark violet")
+svd_plot_1_20 <- paste(outputDir,'\\',"svd_plot_1_20.png",sep = "", collapse = NULL)
 
+png(filename = svd_plot_1_20, width = 1024)
+options(scipen = 5)
+plot(coordDocs[,1],coordDocs[,2], pch = 1, col = "black", xlim = c(-0.2,0.05), xlab = "", ylab = "")
+points(coordWords[,1],coordWords[,2], pch = 2, col = "red")
+text(coordDocs[,1],coordDocs[,2],paste("d",1:20,sep = ""),pos = 4, col = "black")
+text(coordWords[,1],coordWords[,2],rownames(coordWords),pos = 4, col = "red")
+dev.off()
 
+# Wykres dla macierzy 2-19
+
+coordTerms <- lsa_model_2_19$tk %*% diag(lsa_model_2_19$sk)
+coordDocs <- lsa_model_2_19$dk %*% diag(lsa_model_2_19$sk)
+words <- c("samochód", "auto", "kierowca", "technologia", "przeglądarka", "internet", "serce", 'hiv', "rak", "zdrowie", "dieta", "gen", "dna") 
+coordWords <- coordTerms[words,]
+
+legend <- paste(paste("d",1:20,sep = ""), rownames(coordDocs), sep = " - ")
+
+svd_plot_2_19 <- paste(outputDir,'\\',"svd_plot_2_19.png",sep = "", collapse = NULL)
+
+png(filename = svd_plot_2_19, width = 1024)
+options(scipen = 5)
+plot(coordDocs[,1],coordDocs[,2], pch = 1, col = "black", xlim = c(-0.2,0.05), xlab = "", ylab = "")
+points(coordWords[,1],coordWords[,2], pch = 2, col = "red")
+text(coordDocs[,1],coordDocs[,2],paste("d",1:20,sep = ""),pos = 4, col = "black")
+text(coordWords[,1],coordWords[,2],rownames(coordWords),pos = 4, col = "red")
+dev.off()
+
+# Wykres dla macierzy 3-18
+
+coordTerms <- lsa_model_3_18$tk %*% diag(lsa_model_3_18$sk)
+coordDocs <- lsa_model_3_18$dk %*% diag(lsa_model_3_18$sk)
+words <- c("samochód", "auto", "kierowca", "technologia", "przeglądarka", "internet", "serce", 'hiv', "rak", "zdrowie", "dieta", "gen", "dna") 
+coordWords <- coordTerms[words,]
+
+legend <- paste(paste("d",1:20,sep = ""), rownames(coordDocs), sep = " - ")
+
+svd_plot_3_18 <- paste(outputDir,'\\',"svd_plot_3_18.png",sep = "", collapse = NULL)
+
+png(filename = svd_plot_3_18, width = 1024)
+options(scipen = 5)
+plot(coordDocs[,1],coordDocs[,2], pch = 1, col = "black", xlim = c(-0.2,0.05), xlab = "", ylab = "")
+points(coordWords[,1],coordWords[,2], pch = 2, col = "red")
+text(coordDocs[,1],coordDocs[,2],paste("d",1:20,sep = ""),pos = 4, col = "black")
+text(coordWords[,1],coordWords[,2],rownames(coordWords),pos = 4, col = "red")
+dev.off()
+
+# Wykres dla macierzy 4-17
+
+coordTerms <- lsa_model_4_17$tk %*% diag(lsa_model_4_17$sk)
+coordDocs <- lsa_model_4_17$dk %*% diag(lsa_model_4_17$sk)
+words <- c("samochód", "auto", "kierowca", "technologia", "przeglądarka", "internet", "serce", 'hiv', "rak", "zdrowie", "dieta", "gen", "dna") 
+coordWords <- coordTerms[words,]
+
+legend <- paste(paste("d",1:20,sep = ""), rownames(coordDocs), sep = " - ")
+
+svd_plot_4_17 <- paste(outputDir,'\\',"svd_plot_4_17.png",sep = "", collapse = NULL)
+
+png(filename = svd_plot_4_17, width = 1024)
+options(scipen = 5)
+plot(coordDocs[,1],coordDocs[,2], pch = 1, col = "black", xlim = c(-0.2,0.05), xlab = "", ylab = "")
+points(coordWords[,1],coordWords[,2], pch = 2, col = "red")
+text(coordDocs[,1],coordDocs[,2],paste("d",1:20,sep = ""),pos = 4, col = "black")
+text(coordWords[,1],coordWords[,2],rownames(coordWords),pos = 4, col = "red")
+dev.off()
 
 
 
